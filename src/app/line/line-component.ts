@@ -12,6 +12,7 @@ import {DSVRowArray , line } from "d3";
 })
 
 export class lineComponent implements OnInit {
+
   data2:Array<any> = [
     {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
     {"Framework": "React", "Stars": "150793", "Released": "2013"},
@@ -118,6 +119,7 @@ export class lineComponent implements OnInit {
   ngAfterViewInit() {   //생성전에 데이터가 오면 안되니까
     setTimeout(() => {
       this.renderchart();
+
     }, 1);
   }
 
@@ -226,10 +228,9 @@ export class lineComponent implements OnInit {
  * bar chart
  * */
 
-
   private margins =50;
   private width = 750 - (this.margins*2);
-  private height = 400 - (this. margins*2);
+  private height = 300 - (this. margins*2);
 
 
   bar(): void {   //barr chart
@@ -249,7 +250,7 @@ export class lineComponent implements OnInit {
   }
 
   drawBars(dds:any[]): void {
-
+    console.log(dds)
     const x = d3.scaleBand()
       .range([0, this.width])
       .domain(dds.map(d => d.Framework))
@@ -269,16 +270,16 @@ export class lineComponent implements OnInit {
     this.svg.append('g')
       .call(d3.axisLeft(y));
 
-    this.svg.selectAll('p')
+    this.svg.selectAll('g')
       .data(dds)
       .enter()
       .append('rect')
       .attr('x', (d: { Framework: string; }) => x(d.Framework))
       .attr('y', (d: { Stars: d3.NumberValue; })=> y(d.Stars))
       .attr('width', x.bandwidth())  // .attr('x', d => x(d.Framework))
-      .attr('y', (d: { Stars: d3.NumberValue; })=> y(d.Stars))
-      .attr('width', x.bandwidth())
       .attr('height', (d: { Stars: d3.NumberValue; }) => this.height - y(d.Stars))
       .attr('fill','magenta');
   }
+
+
 }
