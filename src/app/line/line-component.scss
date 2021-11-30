@@ -19,3 +19,20 @@
 
   }
 }
+
+.bar-chart{
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  height: auto;
+   h2{
+     text-align: center;
+     margin: 0;
+     padding: 10px 0;
+   }
+   &-container{
+     height: 300px;
+  }
+}
+
