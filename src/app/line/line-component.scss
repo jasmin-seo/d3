@@ -5,4 +5,17 @@
   margin: 0 auto;
   border: 1px solid #ccc;
 
+  &-linechart{
+    height: 200px;
+  }
+
+}
+
+
+.container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  .item{
+
+  }
 }
