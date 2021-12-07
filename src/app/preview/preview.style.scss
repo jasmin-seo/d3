@@ -1,0 +1,10 @@
+.container{
+  border: 1px solid navy;
+  max-width:1000px;
+  height: auto;
+  margin: 0 auto;
+  &-box{
+    width: 100%;
+    height: 300px;
+  }
+}

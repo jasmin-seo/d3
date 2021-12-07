@@ -1,0 +1,13 @@
+.bar-chart{
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border:1px solid #ccc;
+  h2{
+    padding: 10px 0;
+    text-align: center;
+  }
+  &-container{
+    height: 200px;
+  }
+}

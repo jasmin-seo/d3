@@ -13,15 +13,14 @@ import {DSVRowArray , line } from "d3";
 
 export class lineComponent implements OnInit {
 
-  data2:Array<any> = [
-    {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
-    {"Framework": "React", "Stars": "150793", "Released": "2013"},
-    {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
-    {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
-    {"Framework": "Ember", "Stars": "21471", "Released": "2011"}
-  ]
 
-
+  // data2:Array<any> = [
+  //   {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
+  //   {"Framework": "React", "Stars": "150793", "Released": "2013"},
+  //   {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
+  //   {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
+  //   {"Framework": "Ember", "Stars": "21471", "Released": "2011"}
+  // ]
 
   data: Array<any> = [
     {
@@ -98,14 +97,14 @@ export class lineComponent implements OnInit {
   margin = {top: 30, right: 30, left: 30, bottom: 20}
 
   @ViewChild('lineChart') lineChart: ElementRef | undefined; //외부에서 가져오는 것을 지정해준다.
-  @ViewChild('barchart') barchart: ElementRef | undefined;
+  // @ViewChild('barchart') barchart: ElementRef | undefined;
   private svg: any;
 
 
   ngOnInit(): void {
     this.update();
-    this.bar();
-    this.drawBars(this.data2);
+    // this.bar();
+    // this.drawBars(this.data2);
     //자료 가져옴!!
     // d3.csv("https://gist.githubusercontent.com/mbostock/4063570/raw/11847750012dfe5351ee1eb290d2a254a67051d0/flare.csv")
     //   .then(res => {
@@ -119,12 +118,11 @@ export class lineComponent implements OnInit {
   ngAfterViewInit() {   //생성전에 데이터가 오면 안되니까
     setTimeout(() => {
       this.renderchart();
-
-    }, 1);
+      }, 1);
   }
 
 
-  private renderchart() {
+  renderchart() {
     this.element = this.lineChart?.nativeElement;
     console.log(this.element);
 
@@ -146,7 +144,7 @@ export class lineComponent implements OnInit {
   }
 
   update() {
-    console.log(this.data);
+    //console.log(this.data);
 
 
     if (!this.element) {
@@ -160,7 +158,6 @@ export class lineComponent implements OnInit {
     const vm = this;
     const {top, bottom, left, right} = vm.margin;
     const {offsetHeight} = vm.element;
-
     let ew = this.element.offsetWidth - this.margin.left - this.margin.right;
     let eh = this.element.offsetHeight;  //200
     let ht = eh - this.margin.bottom;  //80
@@ -191,7 +188,8 @@ export class lineComponent implements OnInit {
       .attr('transform', `translate( ${this.margin.left}, 0)`)
       .call(d3.axisLeft(this.y))
 
-    d3.select('svg').selectAll('circle')
+    d3.select('svg')
+      .selectAll('circle')
       .data(this.data)
       .enter()
       .append('circle')
@@ -204,7 +202,7 @@ export class lineComponent implements OnInit {
 
 
 
-    const lineDrowing = d3.line()
+    const lineDrowing = d3.line()  //선그리기
       // @ts-ignore
       .x(d => this.x(d.date))
       // @ts-ignore
@@ -228,58 +226,64 @@ export class lineComponent implements OnInit {
  * bar chart
  * */
 
-  private margins =50;
-  private width = 750 - (this.margins*2);
-  private height = 300 - (this. margins*2);
-
-
-  bar(): void {   //barr chart
-    console.log(this.data2);
-    if (!this.element) {
-      setTimeout(() => {
-        this.bar();
-      }, 1);
-      return;
-    }
-   this.svg = d3.select('p')
-     .append('svg')
-     .attr('width', this.width + (this.margins * 2))
-     .attr('height', this.height + (this.margins * 2))
-     .append('g')
-     .attr("transform", "translate("+ this.margins + "," + this.margins + ")");
-  }
-
-  drawBars(dds:any[]): void {
-    console.log(dds)
-    const x = d3.scaleBand()
-      .range([0, this.width])
-      .domain(dds.map(d => d.Framework))
-      .padding(0.2);
-
-    this.svg.append('g')
-      .attr('transform', 'translate(0,' + this.height + ')')
-      .call(d3.axisBottom(x))
-      .selectAll('text')
-      .attr('transform','translate(-10,0)rotate(-45)')
-      .style('text-anchor','end');
-
-    const y = d3.scaleLinear()
-      .domain([0, 200000])
-      .range([this.height, 0]);
-
-    this.svg.append('g')
-      .call(d3.axisLeft(y));
-
-    this.svg.selectAll('g')
-      .data(dds)
-      .enter()
-      .append('rect')
-      .attr('x', (d: { Framework: string; }) => x(d.Framework))
-      .attr('y', (d: { Stars: d3.NumberValue; })=> y(d.Stars))
-      .attr('width', x.bandwidth())  // .attr('x', d => x(d.Framework))
-      .attr('height', (d: { Stars: d3.NumberValue; }) => this.height - y(d.Stars))
-      .attr('fill','magenta');
-  }
+  // private margins =50;
+  // private width = 750 - (this.margins*2);
+  // private height = 300 - (this. margins*2);
+  //
+  //
+  // bar(): void {   //barr chart
+  //   console.log(this.data2);
+  //   if (!this.element) {
+  //     setTimeout(() => {
+  //       this.bar();
+  //     }, 1);
+  //     return;
+  //   }
+  //  this.svg = d3.select('.bar-chart-container')
+  //    .append('svg')
+  //    .attr('width', this.width + (this.margins * 2))
+  //    .attr('height', this.height + (this.margins * 2))
+  //    .append('g')
+  //    .attr("transform", "translate("+ this.margins + "," + this.margins + ")")
+  //    .attr('class', 'wrap');
+  // }
+  //
+  // drawBars(dds:any[]): void {
+  //   console.log(dds);
+  //   console.log(this.svg);
+  //   const x = d3.scaleBand()
+  //     .range([0, this.width])
+  //     .domain(dds.map(d => d.Framework))
+  //     .padding(0.2);
+  //
+  //   d3.select('.wrap')
+  //     .attr('transform', 'translate(0,' + this.height + ')')
+  //     .call((d: any) => {
+  //       console.log(d);
+  //       return d3.axisBottom(x)
+  //     })
+  //     .selectAll('text')
+  //     .attr('transform','translate(-10,0)rotate(-45)')
+  //     .style('text-anchor','end');
+  //
+  //   const y = d3.scaleLinear()
+  //     .domain([0, 200000])
+  //     .range([this.height, 0]);
+  //
+  //   d3.select('.wrap')
+  //     .append('g')
+  //     .call(d3.axisLeft(y));
+  //
+  //   this.svg.selectAll('g')
+  //     .data(dds)
+  //     .enter()
+  //     .append('rect')
+  //     .attr('x', (d: { Framework: string; }) => x(d.Framework))
+  //     .attr('y', (d: { Stars: d3.NumberValue; })=> y(d.Stars))
+  //     .attr('width', x.bandwidth())  // .attr('x', d => x(d.Framework))
+  //     .attr('height', (d: { Stars: d3.NumberValue; }) => this.height - y(d.Stars))
+  //     .attr('fill','magenta');
+  // }
 
 
 }

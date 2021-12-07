@@ -1,0 +1,10 @@
+.scatter-container{
+  width: 100%;
+  height: auto;
+  &-box{
+    width: 800px;
+    height: 300px;
+    margin: 0 auto;
+    border:1px solid darkred;
+  }
+}
