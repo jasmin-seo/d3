@@ -20,24 +20,16 @@ export const Type_name = [
           'body_mass_g': 3250,
         },
         {
-
-          'culmen_length_mm': 0,
-          'culmen_depth_mm': 0,
-          'flipper_length_mm': 0,
-          'body_mass_g': 0,
-
+          'culmen_length_mm': 34.6,
+          'culmen_depth_mm': 21.1,
+          'flipper_length_mm': 198,
+          'body_mass_g': 4400,
         },
         {
-
           'culmen_length_mm': 36.7,
           'culmen_depth_mm': 19.3,
           'flipper_length_mm': 193,
           'body_mass_g': 3450,
-
         }
       ]
-
-
-
-
 

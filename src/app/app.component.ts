@@ -22,7 +22,7 @@ export class AppComponent {
       this.http.get<Data>('./assets/data.json')
       .pipe()
       .subscribe(res => {
-        console.log(res)
+       // console.log(res)
         this.data = res;
       });
     // console.log(this.data)
