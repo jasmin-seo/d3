@@ -27,7 +27,8 @@ col = [
 ]
 
 
-  size = 231.5;
+   size = 231.5;
+
   constructor() {
 
   }
@@ -47,7 +48,7 @@ col = [
 //   2. g태그를 이용해 그룹핑
 //   3. x,y축을 생성하지 못함
 //      x축- 수치를 줬음에도 함수로 찍었을때 숫자로 안나오고 string으로 나옴!
-
+//     => reduce함수 사용해서 가공하기. string을 number로 바꾸기.. 여기서는 그냥 number인데 height가 작아서 안보였음.
   renderchart(){
     this.element = this.Fele?.nativeElement;
 
@@ -96,31 +97,33 @@ col = [
 
     this.x = this.col.map((c:string) => d3.scaleLinear()//@ts-ignore
      // .domain(d3.extent(Type_name, d => d[c]))
-       .domain(d3.extent(Type_name, d => {
-    console.log(Type_name)
+      // .domain(d3.extent(Type_name, d => {
+      //   console.log(Type_name)
          // @ts-ignore
-         console.log(d[c])
-       // @ts-ignore
-         return d[c];
-     }))
-      .range([28 / 2, (this.size-28) / 2]));
+       // console.log(d[c])
+         // @ts-ignore
+       //  return d[c];
+    // }))
+      .domain(d3.extent(Type_name,d => d[c]))
+      .rangeRound([50, (this.size)]));
 
     // const gg = this.svgbox.append('g')
+
 
 
     const xAxis = () => {
       // @ts-ignore
       const axis = d3.axisBottom()
         .ticks(6)
-        .tickSize(this.size * this.col.length);
+        .tickSize( this.size * this.col.length);
 
       return (g:any) => g.selectAll("g").data(this.x).join("g")
-        .attr('class', 'gg')
-        .attr("transform", (d: any, i: number) => `translate(${i * this.size},0)`)
-        .each(function (d: any) {
+        .attr('class', (d: any, i: number) => `gg${i}`)
+        .attr("transform", (d: any, i: number) => `translate( ${i * this.size},0)`)
+        .each(function (d: any, i: number) {
           // console.log(d3.select('.gg'));
           // @ts-ignore
-          return d3.selectAll('.gg').call(axis.scale(d));
+          return d3.selectAll(`.gg${i}`).call(axis.scale(d));
           // return this.svgbox.node()
         })
         .call((g: any) => g.select(".domain").remove())
@@ -133,7 +136,7 @@ col = [
       .call(xAxis());
 
     this.y = this.x.map((x:any) => x.copy()
-      .range([this.size-28 /2 , 28/2]))
+      .range([(this.size -20) , 28]))
 
 
     const yAxis = () => {//@ts-ignore
@@ -142,18 +145,18 @@ col = [
         .tickSize(-(this.size) * this.col.length);
 
       return (g:any)=> g.selectAll("g").data(this.y).join("g")
-        .attr("transform", (d:any, i:number) => `translate(0,${i * this.size})`)
-        .each(function(d:any) { //@ts-ignore
-          return d3.selectAll('g').call(axis.scale(d)); })
+        .attr('class', (d: any, i: number) => `ygg${i}`)
+        .attr("transform", (d:any, i:number) => `translate(0, ${i * this.size})`)
+        .each(function(d:any, i:number) { //@ts-ignore
+          return d3.selectAll(`.ygg${i}`).call(axis.scale(d)); })
         .call((g:any) => g.select(".domain").remove())
         .call((g:any) => g.selectAll(".tick line").attr("stroke", "#ddd"));
     }
 
     this.svgbox.append('g')
-     // .attr('transform',`translate(${ews} , 0 )`)
+      .attr('transform',`translate( 40, 0 )`)
       .attr('class','y-axis')
       .call(yAxis());
   }
-
 
 }
